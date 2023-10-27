@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function truncateDescription(description, maxLength) {
     if (description.length > maxLength) {
         return description.substring(0, maxLength) + "...";
@@ -7,13 +9,15 @@ function truncateDescription(description, maxLength) {
 }
 
 export function ProductInfo(props) {
-    const { title, description, image, price } = props.product;
+    const { id, title, description, image, price } = props.product;
     const truncatedDescription = truncateDescription(description, 50);
 
     return (
         <div className="flex flex-col justify-between bg-white p-4 shadow rounded">
             <img className="w-full mb-2" src={image} alt={title} />
-            <h3 className="text-lg font-semibold mb-2">{title}</h3>
+            <Link to={`/product/${id}`} >
+                <h3 className="text-lg font-semibold mb-2">{title}</h3>
+            </Link>
             <p className="text-gray-600 mb-2">{truncatedDescription}</p>
             <div className="flex items-baseline justify-between">
                 <span className="text-blue-500 font-bold">{price} $</span>

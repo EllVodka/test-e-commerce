@@ -1,4 +1,4 @@
-import { Link, NavLink, RouterProvider, createBrowserRouter } from "react-router-dom"
+import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom"
 
 import { ProductList } from "./Components/Api/ProductsList"
 
@@ -6,32 +6,31 @@ import { Header } from "./Components/Store/Header"
 import { Sidebar } from "./Components/Store/Sidebar"
 
 import { Footer } from "./Components/Store/Footer"
+import { ProductId } from "./Components/Api/ProductId"
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <div className="bg-gray-100 font-sans">
-        <Header />
-        <div className="container mx-auto my-8 flex">
-          <Sidebar />
-          <ProductList />
-        </div>
-        <Footer />
+    element: (<div className="bg-gray-100 font-sans">
+      <Header />
+      <div className="container mx-auto my-8 flex">
+        <Sidebar />
+        <Outlet />
       </div>
-    )
-  },
-  {
-    path: '/login',
-    element: (<div>
-      Login
-      <nav>
-        <Link to="/">Accueil</Link>
-        <NavLink to="/login">Login</NavLink>
-      </nav>
-    </div>)
-  }
+      <Footer />
+    </div>),  
+  children: [
+    {
+      path: '',
+      element: (<ProductList />)
+    },
+    {
+      path: 'product/:id',
+      element : (<ProductId />)
+    }
+  ]}
 ])
+
 
 function App() {
 
@@ -41,3 +40,5 @@ function App() {
 }
 
 export default App
+
+

@@ -17,7 +17,7 @@ export function Cart() {
                 </thead>
                 <tbody>
                     {cart.map(product=><tr>
-                        <td className="border px-4 py-2 text-center"><img src={product.image} /></td>
+                        <td className="border px-4 py-2 text-center"><img src={product.image} className="max-w-[60px]" /></td>
                         <td className="border px-4 py-2 text-center">{product.id}</td>
                         <td className="border px-4 py-2 text-center">{product.price} $</td>
                         <td className="border px-4 py-2 text-center">{product.quantity}</td>
@@ -30,7 +30,7 @@ export function Cart() {
                 </tbody>
             </table>
 
-            <div>
+            <div className=" flex flex-col justify-between">
                 <div className="flex flex-col justify- bg-blue-200 border-solid border-2  border-blue-500 rounded-lg py-2">
                     <h3 className="px-3 self-center">Résume</h3>
                     <hr className="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700"></hr>
@@ -48,6 +48,9 @@ export function Cart() {
                         <h3>{getTotalPrice() + 5} $</h3>
                     </div>
                 </div>
+                <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+                       Commander
+                    </button>
             </div>
         </div>
     );

@@ -6,6 +6,7 @@ import { Header } from "./Components/Store/Header"
 
 import { Footer } from "./Components/Store/Footer"
 import { ProductId } from "./Components/Api/ProductId"
+import { Cart } from "./Components/Store/Cart"
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: 'product/:id',
         element: (<ProductId />)
+      },
+      {
+        path: 'cart',
+        element: (<Cart />)
       }
     ]
   }

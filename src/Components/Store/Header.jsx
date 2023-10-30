@@ -7,7 +7,7 @@ export function Header() {
         <Link to={'/'} className="text-2xl font-bold">Ma Boutique</Link>
         <nav>
         <Link to={'/'} className="ml-4">Accueil</Link>
-          <a href="#" className="ml-4">Panier</a>
+          <Link to={'/cart'} className="ml-4">Panier</Link>
           <a href="#" className="ml-4">Connexion</a>
         </nav>
       </div>

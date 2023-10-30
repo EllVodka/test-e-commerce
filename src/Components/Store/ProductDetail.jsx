@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
 
 export function ProductDetail(props ) {
     const { id, title, description, image, price } = props.product;

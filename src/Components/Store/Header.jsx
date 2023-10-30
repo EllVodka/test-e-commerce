@@ -6,7 +6,7 @@ export function Header() {
       <div className="container mx-auto flex justify-between items-center">
         <Link to={'/'} className="text-2xl font-bold">Ma Boutique</Link>
         <nav>
-          <a href="#" className="ml-4">Accueil</a>
+        <Link to={'/'} className="ml-4">Accueil</Link>
           <a href="#" className="ml-4">Panier</a>
           <a href="#" className="ml-4">Connexion</a>
         </nav>

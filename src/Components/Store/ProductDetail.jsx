@@ -18,7 +18,7 @@ export function ProductDetail(props ) {
                 <div className="w-1/2 px-8">
                         <h1 className="text-3xl font-semibold mb-4">{title}</h1>
                     <p className="text-gray-700 mb-4">{description}</p>
-                    <p className="text-blue-500 font-bold text-2xl mb-4">{price}</p>
+                    <p className="text-blue-500 font-bold text-2xl mb-4">{price} $</p>
                     <div className="flex items-center mb-4">
                         <label htmlFor="quantity" className="mr-4">Quantité:</label>
                         <input

@@ -1,30 +1,46 @@
 import axios from "axios";
-import React from "react";
 import { ProductInfo } from "../Store/ProductInfo";
+import { Sidebar } from "../Store/Sidebar";
+import { useEffect, useState } from "react";
 
+function extractCategories(jsonData) {
+    const categories = new Set();
+    jsonData.forEach(item => {
+        if ("category" in item) {
+            categories.add(item.category);
+        }
+    });
+    return Array.from(categories);
+}
 
-export class ProductList extends React.Component {
-    state = {
-        products: []
-    }
+export function ProductList() {
+    const [products, setProducts] = useState({});
+    const [loading, setLoading] = useState(true);
 
-    componentDidMount() {
+    useEffect(() => {
         axios.get(`https://fakestoreapi.com/products`)
             .then(res => {
-                // console.log(res.data);
-                this.setState({ products: res.data });
-            })
+                setProducts(res.data);
+                setLoading(false)
+            });
+    }, [ ]);
+
+
+    if(loading){
+        return <div>Loading...</div>
     }
 
-    render() {
-        return (
-            <div className="w-3/4 grid grid-cols-3 gap-4">                
-                {this.state.products.map(
-                    product => <ProductInfo 
-                    key={product.id}  
-                    product={product} />)}
+    return (
+        <>
+            <Sidebar categorys={extractCategories(products)} />
+            <div className="w-3/4 grid grid-cols-3 gap-4">
+                {products.map(
+                    product => <ProductInfo
+                        key={product.id}
+                        product={product} />)}
             </div>
-        );
+        </>
+    );
 
-    }
+
 }

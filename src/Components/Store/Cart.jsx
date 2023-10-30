@@ -1,4 +1,10 @@
+import { getCart } from "../Cart/cart";
+
 export function Cart() {
+    const cart = getCart();
+
+    console.log(cart);
+    
     return (
         <div className="w-full flex justify-between gap-10">
             <table className="w-2/4 table-auto border border-blue-200 mt-4">

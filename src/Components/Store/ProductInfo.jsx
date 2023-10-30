@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { addCart, addProductToCart } from "../Cart/cart";
 
 function truncateDescription(description, maxLength) {
     if (description.length > maxLength) {
@@ -21,8 +22,12 @@ export function ProductInfo(props) {
             <p className="text-gray-600 mb-2">{truncatedDescription}</p>
             <div className="flex items-baseline justify-between">
                 <span className="text-blue-500 font-bold">{price} $</span>
-                <button className="bg-blue-500 text-white px-4 py-2 rounded mt-4 hover:bg-blue-700">Ajouter au Panier</button>
+                <button onClick={() => addProductToCart(id, image, price)} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Ajouter au Panier
+                </button>
             </div>
         </div>
     );
 }
+
+

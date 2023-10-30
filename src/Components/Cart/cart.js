@@ -20,7 +20,6 @@ export function addCart(product) {
         product.quantity = 1;
         cart.push(product);
     }
-    cart.push(product);
     saveCart(cart);
 
 }
@@ -58,7 +57,11 @@ export function getTotalPrice(){
     let cart = getCart()
     let total = 0;
     for (let product of cart){
-        total += product.quantity + product.price
+        total += product.quantity * product.price
     }
     return total
+}
+
+export function addProductToCart(id,image,price){
+    addCart({id:id,image:image,price:price})
 }

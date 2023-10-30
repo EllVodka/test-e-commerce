@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { addCart, addProductToCart } from "../Cart/cart";
 
-export function ProductDetail(props ) {
+export function ProductDetail(props) {
     const { id, title, description, image, price } = props.product;
     const [quantity, setQuantity] = useState(1);
 
@@ -15,7 +16,7 @@ export function ProductDetail(props ) {
                     <img src={image} alt="Produit 1" className="w-full" />
                 </div>
                 <div className="w-1/2 px-8">
-                        <h1 className="text-3xl font-semibold mb-4">{title}</h1>
+                    <h1 className="text-3xl font-semibold mb-4">{title}</h1>
                     <p className="text-gray-700 mb-4">{description}</p>
                     <p className="text-blue-500 font-bold text-2xl mb-4">{price} $</p>
                     <div className="flex items-center mb-4">
@@ -29,11 +30,13 @@ export function ProductDetail(props ) {
                             min="1"
                         />
                     </div>
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    <button onClick={() => addProductToCart(id, image, price)} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
                         Ajouter au Panier
                     </button>
+
                 </div>
             </div>
         </div>
     );
 }
+

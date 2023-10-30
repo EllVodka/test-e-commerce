@@ -2,9 +2,11 @@ import axios from "axios";
 import { ProductInfo } from "../Store/ProductInfo";
 import { Sidebar } from "../Store/Sidebar";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 function extractCategories(jsonData) {
     const categories = new Set();
+
     jsonData.forEach(item => {
         if ("category" in item) {
             categories.add(item.category);
@@ -14,33 +16,36 @@ function extractCategories(jsonData) {
 }
 
 export function ProductList() {
-    const [products, setProducts] = useState({});
+    const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const category = searchParams.get('category');
 
     useEffect(() => {
         axios.get(`https://fakestoreapi.com/products`)
             .then(res => {
                 setProducts(res.data);
-                setLoading(false)
+                setLoading(false);
             });
-    }, [ ]);
+    }, []);
 
+    let filteredProducts = products;
+    if (category && category !== "all") {
+        filteredProducts = products.filter(product => product.category === category);
+    }
 
-    if(loading){
-        return <div>Loading...</div>
+    if (loading) {
+        return <div>Loading...</div>;
     }
 
     return (
         <>
             <Sidebar categorys={extractCategories(products)} />
             <div className="w-3/4 grid grid-cols-3 gap-4">
-                {products.map(
-                    product => <ProductInfo
-                        key={product.id}
-                        product={product} />)}
+                {filteredProducts.map(product => (
+                    <ProductInfo key={product.id} product={product} />
+                ))}
             </div>
         </>
     );
-
-
 }

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { addCart, addProductToCart } from "../Cart/cart";
+import {  addProductToCart } from "../Cart/cart";
 
 function truncateDescription(description, maxLength) {
     if (description.length > maxLength) {
@@ -29,5 +29,4 @@ export function ProductInfo(props) {
         </div>
     );
 }
-
 

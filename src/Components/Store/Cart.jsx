@@ -1,9 +1,7 @@
-import { getCart } from "../Cart/cart";
+import { getCart, getTotalPrice } from "../Cart/cart";
 
 export function Cart() {
     const cart = getCart();
-
-    console.log(cart);
     
     return (
         <div className="w-full flex justify-between gap-10">
@@ -18,12 +16,15 @@ export function Cart() {
                     </tr>
                 </thead>
                 <tbody>
+                    {cart.map(product=><tr>
+                        <td className="border px-4 py-2 text-center"><img src={product.image} /></td>
+                        <td className="border px-4 py-2 text-center">{product.id}</td>
+                        <td className="border px-4 py-2 text-center">{product.price} $</td>
+                        <td className="border px-4 py-2 text-center">{product.quantity}</td>
+                        <td className="border px-4 py-2 text-center">{product.price * product.quantity} $</td>
+                    </tr>)}
                     <tr>
-                        <td className="border px-4 py-2 text-center">test</td>
-                        <td className="border px-4 py-2 text-center">4254</td>
-                        <td className="border px-4 py-2 text-center">$245</td>
-                        <td className="border px-4 py-2 text-center">1</td>
-                        <td className="border px-4 py-2 text-center">$15,569</td>
+                        
                     </tr>
 
                 </tbody>
@@ -35,16 +36,16 @@ export function Cart() {
                     <hr className="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700"></hr>
                     <div className="flex justify-between gap-10 px-5">
                         <h3>Sous-Total</h3>
-                        <h3>6$</h3>
+                        <h3>{getTotalPrice()} $</h3>
                     </div>
                     <div className="flex justify-between  px-5">
                         <h3>Livraison</h3>
-                        <h3>5$</h3>
+                        <h3>5 $</h3>
                     </div>
                     <hr className="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700"></hr>
                     <div className="flex justify-between px-5">
                         <h3>Total</h3>
-                        <h3>11.95$</h3>
+                        <h3>{getTotalPrice() + 5} $</h3>
                     </div>
                 </div>
             </div>

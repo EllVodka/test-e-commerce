@@ -25,6 +25,7 @@ export function addCart(product) {
 }
 
 export function removeFromCart(product) {
+    console.log("remove");
     let cart = getCart();
     cart = cart.filter(p => p.id != product.id);
     saveCart(cart);
@@ -38,30 +39,40 @@ export function changeQuantity(product, quantity) {
     }
     foundProduct.quantity += quantity;
     if (foundProduct.quantity <= 0) {
-        removeFromCart(cart);
-    }else{
+        removeFromCart(product);
+    } else {
         saveCart(cart);
     }
 }
 
-export function getNumberProduct(){
+export function getNumberProduct() {
     let cart = getCart();
     let number = 0;
-    for(let product of cart){
+    for (let product of cart) {
         number += product.quantity
     }
     return number
 }
 
-export function getTotalPrice(){
+export function getTotalPrice() {
     let cart = getCart()
     let total = 0;
-    for (let product of cart){
+    for (let product of cart) {
         total += product.quantity * product.price
     }
     return total
 }
 
-export function addProductToCart(id,image,price){
-    addCart({id:id,image:image,price:price})
+export function addProductToCart(id, image, price) {
+    let cart = getCart();
+    let foundProduct = cart.find(product => product.id === id);
+
+    if (foundProduct) {
+        foundProduct.quantity += 1;
+    } else {
+        // Ajoutez un nouvel objet pour le produit dans le panier
+        cart.push({ id, image, price, quantity: 1 });
+    }
+
+    saveCart(cart);
 }

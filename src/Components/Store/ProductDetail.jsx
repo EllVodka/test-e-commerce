@@ -30,7 +30,7 @@ export function ProductDetail(props) {
                             min="1"
                         />
                     </div>
-                    <button onClick={() => addProductToCart(id, image, price)} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    <button onClick={() => addProductToCart(id, image, price,quantity)} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
                         Ajouter au Panier
                     </button>
 

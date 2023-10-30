@@ -63,14 +63,25 @@ export function getTotalPrice() {
     return total
 }
 
-export function addProductToCart(id, image, price) {
+export function addProductToCart(id, image, price,quantity = 1) {
     let cart = getCart();
     let foundProduct = cart.find(product => product.id === id);
+
+    if(quantity > 1){
+        if (foundProduct){
+            foundProduct.quantity += quantity;
+        }
+        else {
+            cart.push({ id, image, price, quantity: 1 });
+        }
+        saveCart(cart);
+        
+        return
+    }
 
     if (foundProduct) {
         foundProduct.quantity += 1;
     } else {
-        // Ajoutez un nouvel objet pour le produit dans le panier
         cart.push({ id, image, price, quantity: 1 });
     }
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addCart, addProductToCart } from "../Cart/cart";
+import { addProductToCart } from "../Cart/cart";
 
 export function ProductDetail(props) {
     const { id, title, description, image, price } = props.product;
@@ -30,7 +30,10 @@ export function ProductDetail(props) {
                             min="1"
                         />
                     </div>
-                    <button onClick={() => addProductToCart(id, image, price,quantity)} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    <button onClick={() => {
+                        console.log(quantity);
+                        addProductToCart(id, image, price, quantity);
+                        }} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
                         Ajouter au Panier
                     </button>
 
@@ -39,4 +42,3 @@ export function ProductDetail(props) {
         </div>
     );
 }
-

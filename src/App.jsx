@@ -8,6 +8,7 @@ import { Footer } from "./Components/Store/Footer"
 import { ProductId } from "./Components/Api/ProductId"
 import { Cart } from "./Components/Store/Cart"
 import { Login } from "./Components/Api/Login"
+import { Logout } from "./Components/Account/Logout"
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: 'login',
         element: (<Login />)
+      },
+      {
+        path: 'logout',
+        element: (<Logout/>)
       }
     ]
   }

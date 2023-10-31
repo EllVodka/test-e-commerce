@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     path: '/',
     element: (<div className="bg-gray-100 font-sans">
       <Header />
-      <div className="container mx-auto my-8 flex">
+      <div className="container mx-auto mt-20 my-8 flex">
         <Outlet />
       </div>
       <Footer />
@@ -47,12 +47,7 @@ const router = createBrowserRouter([
 
 
 function App() {
-
-
-
   return <RouterProvider router={router} />
 }
 
 export default App
-
-

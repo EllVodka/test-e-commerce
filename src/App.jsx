@@ -7,9 +7,10 @@ import { Header } from "./Components/Store/Header"
 import { Footer } from "./Components/Store/Footer"
 import { ProductId } from "./Components/Api/ProductId"
 import { Cart } from "./Components/Store/Cart"
-import { Login } from "./Components/Api/Login"
+import { Login } from "./Components/Account/Login"
 import { Logout } from "./Components/Account/Logout"
 import { Account } from "./Components/Account/Account"
+
 
 const router = createBrowserRouter([
   {

@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { getToken } from '../Token/Token';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
 
 export function Account() {
     const [userData, setUserData] = useState({
@@ -26,8 +29,6 @@ export function Account() {
         phone: '',
     });
 
-    const { sub } = jwtDecode(getToken());
-    const [isEditing, setIsEditing] = useState(false);
     useEffect(() => {
         axios.get(`https://fakestoreapi.com/users/${sub}`).then((response) => {
             setUserData(response.data);
@@ -36,22 +37,7 @@ export function Account() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        const updatedUserData = { ...userData };
-
-        if (name.startsWith('name.')) {
-            const fieldName = name.split('.')[1];
-            updatedUserData.name[fieldName] = value;
-        }
-        if(name.startsWith('address.')){
-            const fieldName = name.split('.')[1];
-            updatedUserData.address[fieldName] = value
-        }
-        else {
-            // Sinon, mettez simplement à jour le champ directement dans userData
-            updatedUserData[name] = value;
-        }
-
-        setUserData(updatedUserData);
+        formik.handleChange(e);
     };
 
 
@@ -59,20 +45,59 @@ export function Account() {
         setIsEditing(true);
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        axios.put(`https://fakestoreapi.com/users/${sub}`, userData).then((response) => {
-            console.log('Données mises à jour avec succès !', response);
-        });
-        setIsEditing(false);
-    };
+    const validationSchema = Yup.object().shape({
+        email: Yup.string().email('Adresse email invalide').required('Ce champ est requis'),
+        username: Yup.string().required('Ce champ est requis'),
+        password: Yup.string().required('Ce champ est requis')
+            .min(8, 'Le mot de passe doit contenir au moins 8 caractères')
+            .matches(/[a-zA-Z]/, 'Le mot de passe doit contenir au moins une lettre')
+            .matches(/[0-9]/, 'Le mot de passe doit contenir au moins un chiffre')
+            .required('Ce champ est requis'),
+        firstname: Yup.string().required('Ce champ est requis'),
+        lastname: Yup.string().required('Ce champ est requis'),
+        phone: Yup.string().matches(/^[0-9\-]{14}$/, 'Numéro de téléphone invalide').required('Ce champ est requis'),
+        city: Yup.string().required('Ce champ est requis'),
+        street: Yup.string().required('Ce champ est requis'),
+        number: Yup.string().required('Ce champ est requis'),
+        zipcode: Yup.string().required('Ce champ est requis'),
 
+    });
+
+    const { sub } = jwtDecode(getToken());
+    const [isEditing, setIsEditing] = useState(false);
+    const formik = useFormik({
+        enableReinitialize: true,
+        initialValues: {
+            email: userData.email,
+            username: userData.username,
+            password: userData.password,
+            firstname: userData.name.firstname,
+            lastname: userData.name.lastname,
+            phone: userData.phone,
+            city: userData.address.city,
+            street: userData.address.street,
+            number: userData.address.number,
+            zipcode: userData.address.zipcode
+        },
+        validationSchema: validationSchema,
+        onSubmit: (values) => {
+            axios.put(`https://fakestoreapi.com/users/${sub}`, values)
+                .then((response) => {
+                    console.log('Données mises à jour avec succès !', response);
+                    setIsEditing(false);
+                })
+                .catch((error) => {
+                    console.error('Erreur lors de la mise à jour des données', error);
+                });
+        },
+
+    });
 
     return (
         <div className="container mx-auto my-8">
             <h2 className="text-2xl font-semibold mb-4">Informations du compte</h2>
             {isEditing ? (
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={formik.handleSubmit}>
                     <div className='grid grid-cols-1 gap-6 mb-6 md:grid-cols-2 lg:grid-cols-3'>
                         <div className='flex flex-col gap-3 bg-blue-200 text rounded-xl p-4'>
                             <div>
@@ -80,32 +105,44 @@ export function Account() {
                                 <input
                                     type="email"
                                     name="email"
-                                    value={userData.email}
+                                    value={formik.values.email}
                                     onChange={handleChange}
+                                    onBlur={formik.handleBlur}
                                     className="border border-gray-300 px-3 py-2 rounded"
                                     required
                                 />
+                                {formik.touched.email && formik.errors.email ? (
+                                    <div className="text-red-500">{formik.errors.email}</div>
+                                ) : null}
                             </div>
                             <div>
                                 <input
                                     type="text"
                                     name="username"
-                                    value={userData.username}
+                                    value={formik.values.username}
                                     onChange={handleChange}
+                                    onBlur={formik.handleBlur}
                                     className="border border-gray-300 px-3 py-2 rounded"
                                     required
                                 />
+                                {formik.touched.username && formik.errors.username ? (
+                                    <div className="text-red-500">{formik.errors.username}</div>
+                                ) : null}
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-600">Mot de passe</label>
                                 <input
                                     type="password"
                                     name="password"
-                                    value={userData.password}
+                                    value={formik.values.password}
                                     onChange={handleChange}
+                                    onBlur={formik.handleBlur}
                                     className="border border-gray-300 px-3 py-2 rounded"
                                     required
                                 />
+                                {formik.touched.password && formik.errors.password ? (
+                                    <div className="text-red-500">{formik.errors.password}</div>
+                                ) : null}
                             </div>
                         </div>
 
@@ -114,34 +151,46 @@ export function Account() {
                                 <label className="block text-sm font-medium text-gray-600">Prénom</label>
                                 <input
                                     type="text"
-                                    name="name.firstname"
-                                    value={userData.name.firstname}
+                                    name="firstname"
+                                    value={formik.values.firstname}
                                     onChange={handleChange}
+                                    onBlur={formik.handleBlur}
                                     className="border border-gray-300 px-3 py-2 rounded"
                                     required
                                 />
+                                {formik.touched.firstname && formik.errors.firstname ? (
+                                    <div className="text-red-500">{formik.errors.firstname}</div>
+                                ) : null}
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-600">Nom de famille</label>
                                 <input
                                     type="text"
-                                    name="name.lastname"
-                                    value={userData.name.lastname}
+                                    name="lastname"
+                                    value={formik.values.lastname}
                                     onChange={handleChange}
+                                    onBlur={formik.handleBlur}
                                     className="border border-gray-300 px-3 py-2 rounded"
                                     required
                                 />
+                                {formik.touched.lastname && formik.errors.lastname ? (
+                                    <div className="text-red-500">{formik.errors.lastname}</div>
+                                ) : null}
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-600">Téléphone</label>
                                 <input
                                     type="text"
                                     name="phone"
-                                    value={userData.phone}
+                                    value={formik.values.phone}
                                     onChange={handleChange}
+                                    onBlur={formik.handleBlur}
                                     className="border border-gray-300 px-3 py-2 rounded"
                                     required
                                 />
+                                {formik.touched.phone && formik.errors.phone ? (
+                                    <div className="text-red-500">{formik.errors.phone}</div>
+                                ) : null}
                             </div>
                         </div>
 
@@ -150,45 +199,61 @@ export function Account() {
                                 <label className="block text-sm font-medium text-gray-600">Ville</label>
                                 <input
                                     type="text"
-                                    name="address.city"
-                                    value={userData.address.city}
+                                    name="city"
+                                    value={formik.values.city}
                                     onChange={handleChange}
+                                    onBlur={formik.handleBlur}
                                     className="border border-gray-300 px-3 py-2 rounded"
                                     required
                                 />
+                                {formik.touched.city && formik.errors.city ? (
+                                    <div className="text-red-500">{formik.errors.city}</div>
+                                ) : null}
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-600">Rue</label>
                                 <input
                                     type="text"
-                                    name="address.street"
-                                    value={userData.address.street}
+                                    name="street"
+                                    value={formik.values.street}
                                     onChange={handleChange}
+                                    onBlur={formik.handleBlur}
                                     className="border border-gray-300 px-3 py-2 rounded"
                                     required
                                 />
+                                {formik.touched.street && formik.errors.street ? (
+                                    <div className="text-red-500">{formik.errors.street}</div>
+                                ) : null}
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-600">Numero de rue</label>
                                 <input
                                     type="text"
-                                    name="address.number"
-                                    value={userData.address.number}
+                                    name="number"
+                                    value={formik.values.number}
                                     onChange={handleChange}
+                                    onBlur={formik.handleBlur}
                                     className="border border-gray-300 px-3 py-2 rounded"
                                     required
                                 />
+                                {formik.touched.number && formik.errors.number ? (
+                                    <div className="text-red-500">{formik.errors.number}</div>
+                                ) : null}
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-600">Code postal</label>
                                 <input
                                     type="text"
-                                    name="address.zipcode"
-                                    value={userData.address.zipcode}
+                                    name="zipcode"
+                                    value={formik.values.zipcode}
                                     onChange={handleChange}
+                                    onBlur={formik.handleBlur}
                                     className="border border-gray-300 px-3 py-2 rounded"
                                     required
                                 />
+                                {formik.touched.zipcode && formik.errors.zipcode ? (
+                                    <div className="text-red-500">{formik.errors.zipcode}</div>
+                                ) : null}
                             </div>
                         </div>
                     </div>

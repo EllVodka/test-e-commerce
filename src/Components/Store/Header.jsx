@@ -15,7 +15,7 @@ export function Header() {
               (<></>)
               }
           </Link>
-          <a href="#" className="ml-4">Connexion</a>
+          <Link to={'/login'} className="ml-4">Connexion</Link>
         </nav>
       </div>
     </header>

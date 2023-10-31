@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { changeQuantity, getCart, getNumberProduct, getTotalPrice, saveCart } from "../Cart/cart";
+import { changeQuantity, deleteCart, getCart, getNumberProduct, getTotalPrice, saveCart } from "../Cart/cart";
 
 export function Cart() {
     const initialCart = getCart();
@@ -15,41 +15,45 @@ export function Cart() {
     };
 
     return (
-        <div className="w-full flex justify-between gap-10">
+        <div className="w-full flex justify-between gap-10 content-stretch">
             {getNumberProduct() === 0 ? <p>Aucun article est dans le panier</p> : (
-                <table className="w-2/4 table-auto border border-blue-200 mt-4">
-                    <thead className="bg-blue-200">
-                        <tr>
-                            <th className="border px-4 py-2">Produit</th>
-                            <th className="border px-4 py-2">Référence</th>
-                            <th className="border px-4 py-2">Prix</th>
-                            <th className="border px-4 py-2">Quantité</th>
-                            <th className="border px-4 py-2">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {cart.map(product =>
-                            <tr key={product.id}>
-                                <td className="border px-4 py-2 text-center"><img src={product.image} className="max-w-[60px]" /></td>
-                                <td className="border px-4 py-2 text-center">{product.id}</td>
-                                <td className="border px-4 py-2 text-center">{product.price} $</td>
-                                <td className="border px-4 py-2 text-center">
-                                    <button
-                                        onClick={() => changeQuantityLocal(product, -1)}
-                                        className="bg-blue-200 px-2 rounded-lg mr-2 hover:bg-blue-300">-</button>
-                                    {product.quantity}
-                                    <button
-                                        onClick={() => changeQuantityLocal(product, 1)}
-                                        className="bg-blue-200 px-2 rounded-lg ml-2 hover:bg-blue-300">+</button>
-                                </td>
-                                <td className="border px-4 py-2 text-center">{(product.price * product.quantity).toFixed(1)} $</td>
-                            </tr>)}
-                        <tr>
+                <div className="flex flex-col justify-between content-stretch gap-5">
+                    <table className=" table-auto border border-blue-200 mt-4">
+                        <thead className="bg-blue-200">
+                            <tr>
+                                <th className="border px-4 py-2">Produit</th>
+                                <th className="border px-4 py-2">Référence</th>
+                                <th className="border px-4 py-2">Prix</th>
+                                <th className="border px-4 py-2">Quantité</th>
+                                <th className="border px-4 py-2">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {cart.map(product =>
+                                <tr key={product.id}>
+                                    <td className="border px-4 py-2 text-center"><img src={product.image} className="max-w-[60px]" /></td>
+                                    <td className="border px-4 py-2 text-center">{product.id}</td>
+                                    <td className="border px-4 py-2 text-center">{product.price} $</td>
+                                    <td className="border px-4 py-2 text-center">
+                                        <button
+                                            onClick={() => changeQuantityLocal(product, -1)}
+                                            className="bg-blue-200 px-2 rounded-lg mr-2 hover:bg-blue-300">-</button>
+                                        {product.quantity}
+                                        <button
+                                            onClick={() => changeQuantityLocal(product, 1)}
+                                            className="bg-blue-200 px-2 rounded-lg ml-2 hover:bg-blue-300">+</button>
+                                    </td>
+                                    <td className="border px-4 py-2 text-center">{(product.price * product.quantity).toFixed(1)} $</td>
+                                </tr>)}
+                            <tr>
 
-                        </tr>
+                            </tr>
 
-                    </tbody>
-                </table>)}
+                        </tbody>
+                    </table>
+                    <button onClick={() => deleteCart()} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 w-2/5 self-center">Supprimer panier</button>
+                </div>
+            )}
 
             <div className=" flex flex-col justify-between">
                 <div className="flex flex-col justify- bg-blue-200 border-solid border-2  border-blue-500 rounded-lg py-2">

@@ -87,3 +87,7 @@ export function addProductToCart(id, image, price,quantity = 1) {
 
     saveCart(cart);
 }
+
+export function deleteCart(){
+    localStorage.removeItem('cart');
+}

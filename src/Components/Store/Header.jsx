@@ -9,8 +9,11 @@ export function Header() {
         <Link to={'/'} className="text-2xl font-bold">Ma Boutique</Link>
         <nav>
           <Link to={'/'} className="ml-4">Accueil</Link>
-          <Link to={'/cart'} className="ml-4">Panier 
-          <span className="bg-red-500 rounded-full py-1 px-3 ">{getNumberProduct()}</span>
+          <Link to={'/cart'} className="ml-4">Panier
+            {getNumberProduct() !== 0 ?
+              (<span className="bg-red-500 rounded-full py-1 px-3 ml-2">{getNumberProduct()}</span>) : 
+              (<></>)
+              }
           </Link>
           <a href="#" className="ml-4">Connexion</a>
         </nav>

@@ -7,13 +7,17 @@ import { Header } from "./Components/Store/Header"
 import { Footer } from "./Components/Store/Footer"
 import { ProductId } from "./Components/Api/ProductId"
 import { Cart } from "./Components/Store/Cart"
+import { Login } from "./Components/Account/Login"
+import { Logout } from "./Components/Account/Logout"
+import { Account } from "./Components/Account/Account"
+
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: (<div className="bg-gray-100 font-sans">
       <Header />
-      <div className="container mx-auto my-8 flex">
+      <div className="container mx-auto mt-20 my-8 flex">
         <Outlet />
       </div>
       <Footer />
@@ -21,11 +25,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '',
-        element: (
-          <>
-            <ProductList />
-          </>
-        )
+        element: (<ProductList />)
       },
       {
         path: 'product/:id',
@@ -34,6 +34,18 @@ const router = createBrowserRouter([
       {
         path: 'cart',
         element: (<Cart />)
+      },
+      {
+        path: 'login',
+        element: (<Login />)
+      },
+      {
+        path: 'logout',
+        element: (<Logout/>)
+      },
+      {
+        path: 'account',
+        element: (<Account />)
       }
     ]
   }
@@ -41,12 +53,7 @@ const router = createBrowserRouter([
 
 
 function App() {
-
-
-
   return <RouterProvider router={router} />
 }
 
 export default App
-
-

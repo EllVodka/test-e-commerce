@@ -29,7 +29,7 @@ export function HeaderLink() {
 
 
     return (
-        <div className="flex flex-col sm:flex-row">
+        <div className="flex flex-col sm:items-center sm:flex-row">
             <Link to={'/'} className="ml-4 p-1 hover:bg-blue-600 rounded-md">
                 Accueil
             </Link>

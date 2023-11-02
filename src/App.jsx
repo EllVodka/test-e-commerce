@@ -15,7 +15,7 @@ import { Account } from "./Components/Account/Account"
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (<div className="bg-gray-100 font-sans">
+    element: (<div className="font-sans">
       <Header />
       <div className="container mx-auto mt-20 my-8 flex">
         <Outlet />
@@ -25,7 +25,9 @@ const router = createBrowserRouter([
     children: [
       {
         path: '',
-        element: (<ProductList />)
+        element: (
+            <ProductList />
+        )
       },
       {
         path: 'product/:id',

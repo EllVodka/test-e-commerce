@@ -15,9 +15,9 @@ export function Cart() {
     };
 
     return (
-        <div className="w-full flex justify-between gap-10 content-stretch">
+        <div className="w-full flex flex-col justify-between gap-10 px-3 content-stretch md:flex-row md:px-0">
             {getNumberProduct() === 0 ? <p>Aucun article est dans le panier</p> : (
-                <div className="flex flex-col justify-between content-stretch gap-5">
+                <div className="flex flex-col justify-between content-stretch gap-5 md:w-2/3">
                     <table className=" table-auto border border-blue-200 mt-4">
                         <thead className="bg-blue-200">
                             <tr>
@@ -51,11 +51,11 @@ export function Cart() {
 
                         </tbody>
                     </table>
-                    <button onClick={() => deleteCart()} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 w-2/5 self-center">Supprimer panier</button>
+                    <button onClick={() => deleteCart()} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 md:w-2/5 md:self-center xl:w-1/3">Supprimer panier</button>
                 </div>
             )}
 
-            <div className=" flex flex-col justify-between">
+            <div className=" flex flex-col justify-between gap-4 md:w-1/3">
                 <div className="flex flex-col justify- bg-blue-200 border-solid border-2  border-blue-500 rounded-lg py-2">
                     <h3 className="px-3 self-center">Résume</h3>
                     <hr className="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700"></hr>
@@ -73,7 +73,7 @@ export function Cart() {
                         <h3>{(getTotalPrice() + 5).toFixed(1)} $</h3>
                     </div>
                 </div>
-                <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+                <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 lg:w-3/5 lg:self-center">
                     Commander
                 </button>
             </div>

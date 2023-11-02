@@ -41,7 +41,7 @@ export function ProductList() {
     return (
         <>
             <Sidebar categorys={extractCategories(products)} />
-            <div className="w-3/4 grid grid-cols-3 gap-4">
+            <div className="w-3/4 grid grid-cols-1 gap-4 ml-44 sm:ml-52 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                 {filteredProducts.map(product => (
                     <ProductInfo key={product.id} product={product} />
                 ))}

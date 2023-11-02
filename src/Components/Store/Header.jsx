@@ -12,7 +12,7 @@ export function Header() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-blue-500 text-white py-4">
+    <header className="fixed top-0 left-0 right-0 bg-blue-500 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
         <Link to={'/'} className="text-2xl font-bold">
           Ma Boutique
@@ -30,12 +30,12 @@ export function Header() {
         </div>
         ):
         (
-          <FaTimes className='mr-10 cursor-pointer' onClick={toggleDropdown}/>
-        )
+          <FaTimes className='sm:hidden mr-10 cursor-pointer' onClick={toggleDropdown}/>
+        ) 
         }
         
         {showDropdown && (
-          <div className="sm:hidden absolute right-10 mt-32 bg-blue-500 p-2 rounded shadow border border-black">
+          <div className="sm:hidden absolute right-10 mt-32 bg-blue-500 p-1 rounded shadow border border-black">
             <HeaderLink />
           </div>
         )}

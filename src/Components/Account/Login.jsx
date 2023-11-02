@@ -30,7 +30,7 @@ export function Login(){
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="container flex items-center justify-center bg-gray-100">
             <div className="bg-white p-8 rounded shadow-md w-96">
                 <h2 className="text-2xl font-semibold mb-4">Login</h2>
                 <div className="mb-4">

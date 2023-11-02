@@ -62,10 +62,10 @@ export function HeaderLink() {
                     )}
                 </div>
             ) : (<>
-                <Link to="/login" className="ml-4">
+                <Link to="/login" className="ml-4 p-1 hover:bg-blue-600 rounded-md">
                     Connexion
                 </Link>
-                <Link to="/signin" className="ml-4">
+                <Link to="/signin" className="ml-4 p-1 hover:bg-blue-600 rounded-md">
                     Inscription
                 </Link>
             </>

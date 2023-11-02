@@ -35,7 +35,7 @@ export function Header() {
         }
         
         {showDropdown && (
-          <div className="sm:hidden absolute right-10 mt-32 bg-blue-500 p-1 rounded shadow border border-black">
+          <div className="sm:hidden absolute right-10 mt-40 bg-blue-500 p-1 rounded shadow border border-black">
             <HeaderLink />
           </div>
         )}

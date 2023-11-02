@@ -15,7 +15,7 @@ export function Sidebar(props) {
             <Link to={`/?category=${category}`} className="text-blue-500 hover:underline">{category}</Link>
             {category == searchCategory ? (
             <Link to={'/'} className="">
-              <FaTimes className="bg-red-500 rounded-full p-1 w-6 h-6"/>
+              <FaTimes className="bg-red-500 rounded-full p-1 w-6 h-6 text-white"/>
               </Link>
             ):(
             <></>

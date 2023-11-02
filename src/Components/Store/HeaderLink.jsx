@@ -61,10 +61,14 @@ export function HeaderLink() {
                         </div>
                     )}
                 </div>
-            ) : (
+            ) : (<>
                 <Link to="/login" className="ml-4">
                     Connexion
                 </Link>
+                <Link to="/signin" className="ml-4">
+                    Inscription
+                </Link>
+            </>
             )}
         </div>
     );

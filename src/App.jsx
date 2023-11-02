@@ -10,6 +10,7 @@ import { Cart } from "./Components/Store/Cart"
 import { Login } from "./Components/Account/Login"
 import { Logout } from "./Components/Account/Logout"
 import { Account } from "./Components/Account/Account"
+import {  Signup } from "./Components/Account/Signup"
 
 
 const router = createBrowserRouter([
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: 'account',
         element: (<Account />)
+      },
+      {
+        path: 'signin',
+        element: (<Signup />)
       }
     ]
   }

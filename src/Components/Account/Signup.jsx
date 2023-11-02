@@ -1,4 +1,6 @@
+import axios from 'axios';
 import { useFormik } from 'formik';
+import { useNavigate } from 'react-router';
 import * as Yup from 'yup';
 
 export function Signup() {
@@ -17,6 +19,7 @@ export function Signup() {
         number: Yup.string().required('Ce champ est requis'),
         zipcode: Yup.string().required('Ce champ est requis'),
     });
+    const navigate = useNavigate();
 
     const formik = useFormik({
         initialValues: {
@@ -34,7 +37,36 @@ export function Signup() {
         },
         validationSchema: SignupSchema,
         onSubmit: (values) => {
-            console.log(values);
+            axios.post('https://fakestoreapi.com/users', {
+                email: values.email,
+                username: values.username,
+                password: values.password,
+                name: {
+                    firstname: values.firstname,
+                    lastname: values.lastname
+                },
+                address: {
+                    city: values.city,
+                    street: values.street,
+                    number: values.number,
+                    zipcode: values.zipcode,
+                    geolocation: {
+                        lat: '-37.3159',
+                        long: '81.1496'
+                    }
+                },
+                phone: values.phone
+            })
+                .then((response) => {
+                    console.log('Inscription réussie !', response)
+                    
+                    navigate('/login')
+                })
+                .catch((error) => {
+                    console.error("Erreur lors de l'inscription", error)
+                })
+
+
         },
     });
 
